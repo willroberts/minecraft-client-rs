@@ -1,3 +1,6 @@
+mod client;
+mod message;
+
 fn main() {
-    println!("Hello, world!");
+    println!("wip");
 }
