@@ -8,15 +8,15 @@ A client for the Minecraft RCON API.
 use minecraft_client_rs::Client;
 
 fn main() {
-	// Create a new client and connect to the server.
+	// Create a new client and connect to the server
 	let mut client = Client::new("127.0.0.1:25575".to_string());
 
 	// Send some commands.
-	client.authenticate("minecraft".to_string()).unwrap(); // Returns Result<Message, Error>.
-	let resp = client.send_command("seed".to_string()).unwrap(); // Returns Result<Message, Error>.
+	client.authenticate("minecraft".to_string()).unwrap(); // Returns Result<Message, Error>
+	let resp = client.send_command("seed".to_string()).unwrap(); // Returns Result<Message, Error>
 	println!("{}", resp.body); // "Seed: [1871644822592853811]"
 
-	// Disconnect cleanly when finished.
+	// Disconnect cleanly when finished
 	client.close();
 }
 ```
