@@ -3,6 +3,7 @@ use std::str::from_utf8;
 
 const HEADER_SIZE: i32 = 10;
 
+#[repr(i32)]
 pub enum MessageType {
 	Response,
 	_Unused,
@@ -46,5 +47,42 @@ pub fn decode_message(bytes: Vec<u8>) -> Message {
 		id: id,
 		msg_type: msg_type,
 		body: body,
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn test_encode_message() {
+		let bytes = encode_message(Message{
+			size: 5 + HEADER_SIZE,
+			id: 1,
+			msg_type: MessageType::Command as i32,
+			body: "hello".to_string(),
+		});
+
+		let expected: Vec<u8> = vec!(15, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 104, 101, 108, 108, 111, 0, 0);
+
+		assert_eq!(bytes, expected);
+	}
+
+	#[test]
+	fn test_decode_message() {
+		let bytes: Vec<u8> = vec!(12, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 104, 105);
+		let msg = decode_message(bytes);
+
+		let expected = Message{
+			size: 2 + HEADER_SIZE,
+			id: 2,
+			msg_type: MessageType::Response as i32,
+			body: "hi".to_string(),
+		};
+
+		assert_eq!(msg.size, expected.size);
+		assert_eq!(msg.id, expected.id);
+		assert_eq!(msg.msg_type, expected.msg_type);
+		assert_eq!(msg.body, expected.body);
 	}
 }
