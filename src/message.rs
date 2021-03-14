@@ -1,7 +1,7 @@
 use std::convert::TryInto;
 use std::str::from_utf8;
 
-const HEADER_SIZE: i32 = 10;
+pub const HEADER_SIZE: i32 = 10;
 
 #[repr(i32)]
 pub enum MessageType {
