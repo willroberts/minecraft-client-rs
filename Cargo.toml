@@ -4,4 +4,7 @@ version = "0.1.0"
 authors = ["Will Roberts"]
 edition = "2018"
 
+[[bin]]
+
+
 [dependencies]
