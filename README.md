@@ -12,8 +12,8 @@ fn main() {
 	let mut client = Client::new("127.0.0.1:25575".to_string());
 
 	// Send some commands.
-	client.authenticate("minecraft".to_string());
-	let resp = client.send_command("seed".to_string());
+	client.authenticate("minecraft".to_string()).unwrap(); // Returns Result<Message, Error>.
+	let resp = client.send_command("seed".to_string()).unwrap(); // Returns Result<Message, Error>.
 	println!("{}", resp.body); // "Seed: [1871644822592853811]"
 
 	// Disconnect cleanly when finished.

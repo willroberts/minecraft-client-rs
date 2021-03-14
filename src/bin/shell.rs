@@ -23,7 +23,7 @@ fn main() {
 
 	// Connect and authenticate.
 	let mut client = Client::new(hostport.to_string());
-	client.authenticate(password.to_string());
+	client.authenticate(password.to_string()).unwrap();
 
 	// Start RCON shell.
 	println!("Starting RCON shell. Use 'exit', 'quit', or Ctrl-C to exit.");
@@ -40,7 +40,7 @@ fn main() {
 			break;
 		}
 
-		let resp = client.send_command(command);
+		let resp = client.send_command(command).unwrap();
 		println!("{}", resp.body);
 	}
 

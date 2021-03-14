@@ -1,3 +1,5 @@
+use std::error::Error;
+use std::fmt;
 use std::io::prelude::*;
 use std::net::{Shutdown, TcpStream};
 use std::sync::atomic::{AtomicI32, Ordering};
@@ -5,6 +7,17 @@ use std::sync::atomic::{AtomicI32, Ordering};
 use crate::message;
 
 const MAX_MESSAGE_SIZE: usize = 4110; // https://wiki.vg/Rcon#Fragmentation
+
+#[derive(Debug)]
+struct RequestIDMismatchError;
+
+impl Error for RequestIDMismatchError {}
+
+impl fmt::Display for RequestIDMismatchError {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		write!(f, "received error response from server")
+	}
+}
 
 pub struct Client {
 	conn: TcpStream,
@@ -23,11 +36,11 @@ impl Client {
 		self.conn.shutdown(Shutdown::Both).unwrap();
 	}
 
-	pub fn authenticate(&mut self, password: String) -> message::Message {
+	pub fn authenticate(&mut self, password: String) -> Result<message::Message, Box<dyn Error>> {
 		self.send_message(message::MessageType::Authenticate as i32, password)
 	}
 
-	pub fn send_command(&mut self, command: String) -> message::Message {
+	pub fn send_command(&mut self, command: String) -> Result<message::Message, Box<dyn Error>> {
 		self.send_message(message::MessageType::Command as i32, command)
 	}
 
@@ -38,7 +51,7 @@ impl Client {
 		next
 	}
 
-	fn send_message(&mut self, msg_type: i32, msg_body: String) -> message::Message {
+	fn send_message(&mut self, msg_type: i32, msg_body: String) -> Result<message::Message, Box<dyn Error>> {
 		let req_id = self.next_id();
 		let req = message::Message{
 			size: msg_body.len() as i32 + message::HEADER_SIZE,
@@ -52,9 +65,11 @@ impl Client {
 		self.conn.read(&mut resp_bytes).unwrap();
 		let resp = message::decode_message(resp_bytes.to_vec());
 
-		assert_eq!(req_id, resp.id);
-
-		resp
+		if req_id == resp.id {
+			Ok(resp)
+		} else {
+			Err(Box::new(RequestIDMismatchError))
+		}
 	}
 }
 
