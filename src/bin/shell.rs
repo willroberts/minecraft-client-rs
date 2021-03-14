@@ -2,7 +2,7 @@ use std::env;
 use std::io;
 use std::io::prelude::*;
 
-use minecraft_client_rs::client::Client;
+use minecraft_client_rs::Client;
 
 const DEFAULT_HOSTPORT: &str = "127.0.0.1:25575";
 const DEFAULT_PASSWORD: &str = "minecraft";

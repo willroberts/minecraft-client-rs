@@ -5,7 +5,7 @@ A client for the Minecraft RCON API.
 ## Library Usage
 
 ```rust
-use minecraft_client_rs::client::Client;
+use minecraft_client_rs::Client;
 
 fn main() {
 	// Create a new client and connect to the server.
