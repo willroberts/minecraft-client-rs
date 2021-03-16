@@ -9,9 +9,14 @@ A client for the Minecraft RCON protocol.
 let mut client = Client::new("127.0.0.1:25575".to_string());
 
 // Send some commands.
-client.authenticate("password".to_string()).unwrap();
-let resp = client.send_command("seed".to_string()).unwrap();
-println!("{}", resp.body); // "Seed: [1871644822592853811]"
+match client.authenticate("password".to_string()) {
+	Ok(_) => { },
+	Err(e) => { /* handle authentication error */ },
+}
+match client.send_command("seed".to_string()) {
+	Ok(resp) => { println!("{}", resp.body); }, // "Seed: [1871644822592853811]"
+	Err(e) => { /* handle error */ },
+}
 
 // Disconnect cleanly when finished
 client.close();
