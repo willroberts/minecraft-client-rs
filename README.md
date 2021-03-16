@@ -1,6 +1,6 @@
 # minecraft-client-rs
 
-A client for the Minecraft RCON API.
+A client for the Minecraft RCON protocol.
 
 ## Library Usage
 
@@ -12,8 +12,8 @@ fn main() {
 	let mut client = Client::new("127.0.0.1:25575".to_string());
 
 	// Send some commands.
-	client.authenticate("minecraft".to_string()).unwrap(); // Returns Result<Message, Error>
-	let resp = client.send_command("seed".to_string()).unwrap(); // Returns Result<Message, Error>
+	client.authenticate("minecraft".to_string()).unwrap();
+	let resp = client.send_command("seed".to_string()).unwrap();
 	println!("{}", resp.body); // "Seed: [1871644822592853811]"
 
 	// Disconnect cleanly when finished
@@ -42,8 +42,8 @@ Response bodies over 4KB will be truncated.
 ## Starting a server for testing
 
 ```
-docker pull itzg/minecraft-server
-docker run --name=minecraft-server -p 25575:25575 -d -e EULA=TRUE itzg/minecraft-server
+$ docker pull itzg/minecraft-server
+$ docker run --name=minecraft-server -p 25575:25575 -d -e EULA=TRUE itzg/minecraft-server
 ```
 
 ## Running Tests
@@ -51,7 +51,7 @@ docker run --name=minecraft-server -p 25575:25575 -d -e EULA=TRUE itzg/minecraft
 After starting the test server in Docker:
 
 ```
-cargo test
+$ cargo test
 ```
 
 ## Reference
