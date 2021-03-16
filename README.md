@@ -19,8 +19,7 @@ client.close();
 
 ## Shell Utility
 
-If you are looking for a tool rather than a library, try the shell command in
-`bin/shell.rs`:
+If you are looking for a tool rather than a library, try the shell command:
 
 ```bash
 $ cargo run -- --hostport 127.0.0.1:25575 --password minecraft
