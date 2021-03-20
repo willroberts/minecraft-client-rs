@@ -63,7 +63,7 @@ impl Client {
 		self.conn.write_all(&message::encode_message(req)[..]).unwrap();
 		let mut resp_bytes = [0u8; MAX_MESSAGE_SIZE];
 		self.conn.read(&mut resp_bytes).unwrap();
-		let resp = message::decode_message(resp_bytes.to_vec());
+		let resp = message::decode_message(resp_bytes.to_vec())?;
 
 		if req_id == resp.id {
 			Ok(resp)
