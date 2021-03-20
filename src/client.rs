@@ -25,15 +25,17 @@ pub struct Client {
 }
 
 impl Client {
-	pub fn new(hostport: String) -> Client {
-		Client{
-			conn: TcpStream::connect(hostport).unwrap(),
+	pub fn new(hostport: String) -> Result<Client, Box<dyn Error>> {
+		let conn = TcpStream::connect(hostport)?;
+		Ok(Client{
+			conn: conn,
 			last_id: AtomicI32::new(0),
-		}
+		})
 	}
 
-	pub fn close(&mut self) {
-		self.conn.shutdown(Shutdown::Both).unwrap();
+	pub fn close(&mut self) -> Result<(), Box<dyn Error>> {
+		self.conn.shutdown(Shutdown::Both)?;
+		Ok(())
 	}
 
 	pub fn authenticate(&mut self, password: String) -> Result<message::Message, Box<dyn Error>> {
@@ -60,9 +62,9 @@ impl Client {
 			body: msg_body,
 		};
 
-		self.conn.write_all(&message::encode_message(req)[..]).unwrap();
+		self.conn.write_all(&message::encode_message(req)[..])?;
 		let mut resp_bytes = [0u8; MAX_MESSAGE_SIZE];
-		self.conn.read(&mut resp_bytes).unwrap();
+		self.conn.read(&mut resp_bytes)?;
 		let resp = message::decode_message(resp_bytes.to_vec())?;
 
 		if req_id == resp.id {

@@ -9,13 +9,13 @@ mod tests {
 	
 	#[test]
 	fn test_authenticate() {
-		let mut client = Client::new(DEFAULT_HOSTPORT.to_string());
+		let mut client = Client::new(DEFAULT_HOSTPORT.to_string()).unwrap();
 		match client.authenticate(DEFAULT_PASSWORD.to_string()) {
 			Ok(_) => {
-				client.close();
+				client.close().unwrap();
 			},
 			Err(_) => {
-				client.close();
+				client.close().unwrap();
 				panic!("failed to authenticate");
 			},
 		}
