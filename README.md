@@ -51,7 +51,13 @@ $ docker run --name=minecraft-server -p 25575:25575 -d -e EULA=TRUE itzg/minecra
 
 ## Running Tests
 
-After starting the test server in Docker:
+To run unit tests:
+
+```
+$ cargo test --lib
+```
+
+To run integration tests after starting the test server in Docker:
 
 ```
 $ cargo test
