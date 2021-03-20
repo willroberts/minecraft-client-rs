@@ -8,8 +8,8 @@ A client for the Minecraft RCON protocol.
 ## Library Usage
 
 ```rust
-// Create a new client and connect to the server
-let mut client = Client::new("127.0.0.1:25575".to_string());
+// Create a new client and connect to the server.
+let mut client = Client::new("127.0.0.1:25575".to_string()).unwrap();
 
 // Send some commands.
 match client.authenticate("password".to_string()) {
@@ -21,8 +21,8 @@ match client.send_command("seed".to_string()) {
 	Err(e) => { /* handle error */ },
 }
 
-// Disconnect cleanly when finished
-client.close();
+// Disconnect cleanly when finished.
+client.close().unwrap();
 ```
 
 ## Shell Utility
