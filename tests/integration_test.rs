@@ -1,5 +1,4 @@
 use minecraft_client_rs::Client;
-use minecraft_client_rs::message;
 
 #[cfg(test)]
 mod tests {
@@ -15,7 +14,7 @@ mod tests {
 			Ok(_) => {
 				client.close();
 			},
-			Err(e) => {
+			Err(_) => {
 				client.close();
 				panic!("failed to authenticate");
 			},
