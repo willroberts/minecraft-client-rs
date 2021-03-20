@@ -1,5 +1,8 @@
 # minecraft-client-rs
 
+[![Travis Badge]][Travis]
+[![License Badge]][License]
+
 A client for the Minecraft RCON protocol.
 
 ## Library Usage
@@ -57,3 +60,8 @@ $ cargo test
 ## Reference
 
 - https://wiki.vg/Rcon
+
+[Travis]: https://travis-ci.org/willroberts/minecraft-client-rs
+[Travis Badge]: https://api.travis-ci.org/willroberts/minecraft-client-rs.svg?branch=main
+[License]: https://www.gnu.org/licenses/gpl-3.0
+[License Badge]: https://img.shields.io/badge/License-GPLv3-blue.svg
