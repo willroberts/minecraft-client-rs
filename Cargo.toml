@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Will Roberts"]
 edition = "2018"
 description = "A client for the Minecraft RCON protocol."
-license = "GNU General Public License v3.0"
+license = "GPL-3.0-or-later"
 
 [dependencies]
