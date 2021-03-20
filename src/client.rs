@@ -72,27 +72,3 @@ impl Client {
 		}
 	}
 }
-
-#[cfg(test)]
-mod tests {
-	use super::*;
-
-	const DEFAULT_HOSTPORT: &str = "127.0.0.1:25575";
-	const DEFAULT_PASSWORD: &str = "minecraft";
-
-	#[test]
-	fn test_id_generation() {
-		let mut client = Client::new(DEFAULT_HOSTPORT.to_string());
-		assert_eq!(client.next_id(), 1);
-		assert_eq!(client.next_id(), 2);
-		assert_eq!(client.next_id(), 3);
-		client.close();
-	}
-	
-	#[test]
-	fn test_send_message() {
-		let mut client = Client::new(DEFAULT_HOSTPORT.to_string());
-		client.send_message(message::MessageType::Authenticate as i32, DEFAULT_PASSWORD.to_string());
-		client.close();
-	}
-}
