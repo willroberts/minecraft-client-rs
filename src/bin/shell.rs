@@ -65,7 +65,14 @@ fn main() {
 				exit(1);
 			}
 		}
-		command.pop(); command.pop(); // Remove trailing newline (\r\n).
+		
+		// Remove trailing whitespace
+		if command.ends_with('\n') {
+			command.pop();
+			if command.ends_with('\r') {
+				command.pop();
+			}
+		}
 
 		if quit_commands.contains(&&command[..]) {
 			break;
