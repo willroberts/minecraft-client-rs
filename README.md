@@ -32,12 +32,17 @@ client.close().unwrap();
 If you are looking for a tool rather than a library, try the shell command:
 
 ```bash
-$ cargo run -- --hostport 127.0.0.1:25575 --password minecraft
+# Single command mode
+$ cargo run -F cli -- -h 127.0.0.1:25575 -p minecraft seed
+Seed: [5454567064266725003]
+
+# Interactive mode
+$ cargo run -F cli -- -h 127.0.0.1:25575 -p minecraft -i
 Starting RCON shell. Use 'exit', 'quit', or Ctrl-C to exit.
 > list
 There are 0 of a max of 20 players online:
 > seed
-Seed: [1871644822592853811]
+Seed: [5454567064266725003]
 ```
 
 ## Limitations
