@@ -6,6 +6,9 @@ edition = "2018"
 description = "A client for the Minecraft RCON protocol."
 license = "GPL-3.0-or-later"
 
+[features]
+cli = ["dep:clap", "dep:regex"]
+
 [dependencies]
-clap = { version = "3.2", features = ["derive"] }
-regex = "1.6"
+clap = { version = "3.2", features = ["derive"], optional = true }
+regex = { version = "1.6", optional = true }
