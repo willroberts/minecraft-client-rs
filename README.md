@@ -2,7 +2,7 @@
 
 [![Crates.io Badge]][Crates.io]
 [![docs.rs Badge]][docs.rs]
-[![Travis Badge]][Travis]
+[![Build Badge]][Build]
 [![License Badge]][License]
 
 A client for the Minecraft RCON protocol.
@@ -78,7 +78,7 @@ $ cargo test
 [Crates.io Badge]: https://img.shields.io/badge/crates.io-v0.1.0-orange
 [docs.rs]: https://docs.rs/minecraft-client-rs/0.1.0/minecraft_client_rs/
 [docs.rs Badge]: https://docs.rs/minecraft-client-rs/badge.svg?version=0.1.0
-[Travis]: https://travis-ci.org/willroberts/minecraft-client-rs
-[Travis Badge]: https://api.travis-ci.org/willroberts/minecraft-client-rs.svg?branch=main
+[Build]: https://github.com/willroberts/minecraft-client-rs/actions/workflows/build.yaml
+[Build Badge]: https://github.com/willroberts/minecraft-client-rs/actions/workflows/build.yaml/badge.svg
 [License]: https://www.gnu.org/licenses/gpl-3.0
 [License Badge]: https://img.shields.io/badge/License-GPLv3-blue.svg
