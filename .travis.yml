@@ -1,7 +1,0 @@
-language: rust
-
-rust:
-- 1.50.0
-
-script:
-- cargo test --lib
