@@ -1,0 +1,28 @@
+name: build
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: install rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: check out code
+      uses: actions/checkout@v3
+    - name: build code
+      uses: actions-rs/cargo@v1
+      with:
+        command: build
+        args: --release --all-features
+    - name: test code
+      uses: actions-rs/cargo@v1
+      with:
+        command: test
+        args: --lib
