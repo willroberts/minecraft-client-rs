@@ -1,9 +1,9 @@
 # minecraft-client-rs
 
+[![License Badge]][License]
+[![Build Badge]][Build]
 [![Crates.io Badge]][Crates.io]
 [![docs.rs Badge]][docs.rs]
-[![Build Badge]][Build]
-[![License Badge]][License]
 
 A client for the Minecraft RCON protocol.
 
@@ -74,11 +74,11 @@ $ cargo test
 
 - https://wiki.vg/Rcon
 
+[License]: https://www.gnu.org/licenses/gpl-3.0
+[License Badge]: https://img.shields.io/badge/License-GPLv3-blue.svg
+[Build]: https://github.com/willroberts/minecraft-client-rs/actions/workflows/build.yaml
+[Build Badge]: https://github.com/willroberts/minecraft-client-rs/actions/workflows/build.yaml/badge.svg
 [Crates.io]: https://crates.io/crates/minecraft-client-rs
 [Crates.io Badge]: https://img.shields.io/badge/crates.io-v0.1.0-orange
 [docs.rs]: https://docs.rs/minecraft-client-rs/0.1.0/minecraft_client_rs/
 [docs.rs Badge]: https://docs.rs/minecraft-client-rs/badge.svg?version=0.1.0
-[Build]: https://github.com/willroberts/minecraft-client-rs/actions/workflows/build.yaml
-[Build Badge]: https://github.com/willroberts/minecraft-client-rs/actions/workflows/build.yaml/badge.svg
-[License]: https://www.gnu.org/licenses/gpl-3.0
-[License Badge]: https://img.shields.io/badge/License-GPLv3-blue.svg
