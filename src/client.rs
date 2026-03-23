@@ -41,7 +41,6 @@ impl Client {
 
     pub fn authenticate(&mut self, password: String) -> Result<message::Message, Box<dyn Error>> {
         let resp = self.send_message(message::MessageType::Authenticate as i32, password)?;
-        println!("{resp:?}");
         // Drain any extra response Minecraft sends after auth
         let mut drain = [0u8; MAX_MESSAGE_SIZE];
         let _ = self.conn.read(&mut drain);
@@ -108,7 +107,6 @@ impl Client {
         if req_id == resp.id {
             Ok(resp)
         } else {
-            eprintln!("ID mismatch: sent {}, got {}", req_id, resp.id);
             Err(Box::new(RequestIDMismatchError))
         }
     }
