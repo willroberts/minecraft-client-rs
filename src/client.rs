@@ -27,8 +27,9 @@ pub struct Client {
 impl Client {
     pub fn new(hostport: String) -> Result<Client, Box<dyn Error>> {
         let conn = TcpStream::connect(hostport)?;
+        conn.set_read_timeout(Some(std::time::Duration::from_millis(500)))?;
         Ok(Client {
-            conn: conn,
+            conn,
             last_id: AtomicI32::new(0),
         })
     }
@@ -39,11 +40,44 @@ impl Client {
     }
 
     pub fn authenticate(&mut self, password: String) -> Result<message::Message, Box<dyn Error>> {
-        self.send_message(message::MessageType::Authenticate as i32, password)
+        let resp = self.send_message(message::MessageType::Authenticate as i32, password)?;
+        println!("{resp:?}");
+        // Drain any extra response Minecraft sends after auth
+        let mut drain = [0u8; MAX_MESSAGE_SIZE];
+        let _ = self.conn.read(&mut drain);
+        Ok(resp)
     }
 
     pub fn send_command(&mut self, command: String) -> Result<message::Message, Box<dyn Error>> {
-        self.send_message(message::MessageType::Command as i32, command)
+        let req_id = self.next_id();
+        let req = message::Message {
+            size: command.len() as i32 + message::HEADER_SIZE,
+            id: req_id.clone(),
+            msg_type: message::MessageType::Command as i32,
+            body: command,
+        };
+
+        self.conn.write_all(&message::encode_message(req)[..])?;
+
+        let mut full_body = String::new();
+        let mut last_resp: Option<message::Message> = None;
+
+        loop {
+            let mut resp_bytes = [0u8; MAX_MESSAGE_SIZE];
+            match self.conn.read(&mut resp_bytes) {
+                Ok(_) => {
+                    let resp = message::decode_message(resp_bytes.to_vec())?;
+                    full_body.push_str(&resp.body);
+                    last_resp = Some(resp);
+                },
+                Err(_) => break,
+            }
+        }
+
+        match last_resp {
+            Some(mut r) => { r.body = full_body; Ok(r) },
+            None => Err(Box::new(RequestIDMismatchError)),
+        }
     }
 
     fn next_id(&self) -> i32 {
@@ -74,6 +108,7 @@ impl Client {
         if req_id == resp.id {
             Ok(resp)
         } else {
+            eprintln!("ID mismatch: sent {}, got {}", req_id, resp.id);
             Err(Box::new(RequestIDMismatchError))
         }
     }

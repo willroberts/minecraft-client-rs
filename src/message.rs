@@ -40,7 +40,9 @@ pub fn decode_message(bytes: Vec<u8>) -> Result<Message, Box<dyn Error>> {
 	let mut body = "".to_string();
 	let body_len: usize = (size - HEADER_SIZE).try_into()?;
 	if body_len > 0 {
-		let body_bytes = from_utf8(&bytes[12..12+body_len])?;
+		let available = bytes.len().saturating_sub(12);
+		let safe_len = body_len.min(available);
+		let body_bytes = from_utf8(&bytes[12..12+safe_len])?;
 		body = body_bytes.to_string();
 	}
 
